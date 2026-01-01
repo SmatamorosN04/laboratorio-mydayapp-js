@@ -1,9 +1,8 @@
-function createTodo(title) {
+export default function createTodo(title) {
   return {
-    id: crypto.randomUUID(),
+    id: Date.now().toString(),
     title: title,
     completed: false,
   };
 }
 
-export default createTodo;
