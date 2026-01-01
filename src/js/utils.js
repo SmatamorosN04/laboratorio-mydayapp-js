@@ -1,8 +1,9 @@
-export function createTodo(title){
+function createTodo(title) {
   return {
     id: crypto.randomUUID(),
-    title,
-    completed: false
+    title: title,
+    completed: false,
   };
 }
 
+export default createTodo;
