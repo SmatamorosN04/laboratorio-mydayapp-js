@@ -12,6 +12,8 @@ const todoCount = document.querySelector(".todo-count strong");
 const editTask = document.querySelector(".editing");
 editTask.style.visibility = "hidden";
 
+const btnDeleteAll = document.querySelector(".clear-completed");
+
 inputTodo.addEventListener("keyup", (event) => {
   if (event.key === "Enter") {
     const text = inputTodo.value.trim();
@@ -50,7 +52,6 @@ todoList.addEventListener("dblclick", (event) => {
 });
 
 todoList.addEventListener("click", (event) => {
-
   if (!event.target.classList.contains("destroy")) return;
 
   const li = event.target.closest("li");
@@ -76,7 +77,7 @@ todoList.addEventListener("keyup", (event) => {
       todo.title = newTitle;
       renderAll();
     }
-    li.classlist.remove("editing");
+    li.classList.remove("editing");
   }
   if (event.key === "Escape") {
     li.classList.remove("editing");
@@ -87,6 +88,19 @@ todoList.addEventListener("keyup", (event) => {
 window.addEventListener("DOMContentLoaded", () => {
   inputTodo.focus();
 });
+
+
+function updateTodoCount() {
+  const pendingCount = all.filter((todo) => !todo.completed).length;
+  todoCount.textContent = pendingCount;
+
+  const itemText = pendingCount === 1 ? "item": "items";
+
+  todoCount.parentElement.textContent = `${pendingCount} ${itemText} left`;
+  const bold = document.createElement("strong");
+  bold.textContent = pendingCount;
+  todoCount.parentElement.innerHTML = `${bold.outerHTML} ${itemText} left`;
+}
 
 function renderAll() {
   todoList.innerHTML = "";
@@ -107,4 +121,6 @@ function renderAll() {
     `;
     todoList.appendChild(li);
   });
+  updateTodoCount();
 }
+
